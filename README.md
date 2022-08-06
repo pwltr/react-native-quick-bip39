@@ -30,7 +30,14 @@ Or see [react-native-quick-crypto](https://github.com/margelo/react-native-quick
 
 ## Examples
 ``` js
-import {generateMnemonic,mnemonicToSeedHex,validateMnemonic,entropyToMnemonic,mnemonicToEntropy,Wordlists} from '@dreson4/react-native-quick-bip39'
+import {
+    generateMnemonic,
+    mnemonicToSeedHex,
+    validateMnemonic,
+    entropyToMnemonic,
+    mnemonicToEntropy,
+    Wordlists
+} from '@dreson4/react-native-quick-bip39'
 
 // Generate a random mnemonic defaults to 128-bits of entropy 
 generateMnemonic(256)
@@ -50,20 +57,6 @@ validateMnemonic(myMnemonic)
 
 validateMnemonic('basket actual')
 // => false
-```
-
-
-``` js
-import bip39 from 'react-native-bip39'
-
-// defaults to BIP39 English word list
-// uses HEX strings for entropy
-const mnemonic = entropyToMnemonic('133755ff')
-// => basket rival lemon
-
-// reversible
-mnemonicToEntropy(mnemonic)
-// => '133755ff'
 ```
 
 
