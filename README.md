@@ -6,7 +6,7 @@
 ReactNative-ready fork of the [original Javascript implementation of Bitcoin BIP39](https://github.com/bitcoinjs/bip39): Mnemonic code for generating deterministic keys.
 
 ## Features
-- Quick all methods sync using [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) and [Buffer](https://github.com/craftzdog/react-native-quick-base64)
+- Quick all methods sync using [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) and [react-native-quick-base64](https://github.com/craftzdog/react-native-quick-base64)
 
 ## Reminder for developers
 
