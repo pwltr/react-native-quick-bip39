@@ -3,11 +3,10 @@
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 
-ReactNative-ready fork of the [original Javascript implementation of Bitcoin BIP39](https://github.com/bitcoinjs/bip39): Mnemonic code for generating deterministic keys
+ReactNative-ready fork of the [original Javascript implementation of Bitcoin BIP39](https://github.com/bitcoinjs/bip39): Mnemonic code for generating deterministic keys.
 
 ## Features
-- Native generation of random bytes using [react-native-randombytes](https://github.com/mvayngrib/react-native-randombytes)
-- Partial implementation of node's `crypto` for react-native, using [react-native-crypto](https://github.com/mvayngrib/react-native-crypto)
+- Quick all methods sync using [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) and [Buffer](https://github.com/craftzdog/react-native-quick-base64)
 
 ## Reminder for developers
 
@@ -21,21 +20,17 @@ However, there should be other checks in place, such as checking to make sure th
 ## Examples
 ``` js
 
-import bip39 from 'react-native-bip39'
+import bip39, {Wordlists} from '@dreson4/react-native-quick-bip39'
 
-// Generate a random mnemonic (uses react-native-randombytes under the hood), defaults to 128-bits of entropy
+// Generate a random mnemonic (uses randomBytes from react-native-quick-crypto under the hood), defaults to 128-bits of entropy
 
-// NOTE: react-native-bip39's generateMnemonic in async, while original bip39's is sync
-// this is due to react-native-randombytes which is forced to return natively generated 
-// bytes with a callback
-static generateMnemonic = async () => {
-  try {
-    return await bip39.generateMnemonic(256) // default to 128
-  } catch(e) {
-    return false
-  }
-}
-// => 'reveal man culture nominee tag abuse keen behave refuse warfare crisp thunder valve knock unique try fold energy torch news thought access hawk table'
+bip39.generateMnemonic(256)
+// => reveal man culture nominee tag abuse keen behave refuse warfare crisp thunder valve knock unique try fold energy torch news thought access hawk table
+
+//For other languages included see Worldlists
+bip39.generateMnemonic(256, Worldlists.ko) //returns korean mnemonic
+
+
 
 bip39.mnemonicToSeedHex('basket actual')
 // => '5cf2d4a8b0355e90295bdfc565a022a409af063d5365bb57bf74d9528f494bfa4400f53d8349b80fdae44082d7f9541e1dba2b003bcfec9d0d53781ca676651f'
