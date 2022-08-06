@@ -75,3 +75,8 @@ const mnemonic = bip39.entropyToMnemonic('133755ff')
 bip39.mnemonicToEntropy(mnemonic)
 // => '133755ff'
 ```
+
+
+## Credits
+- [react-native-bip39](https://github.com/novalabio/react-native-bip39)
+- [original Javascript implementation of Bitcoin BIP39](https://github.com/bitcoinjs/bip39)
