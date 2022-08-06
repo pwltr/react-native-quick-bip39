@@ -1,16 +1,16 @@
 {
-  "name": "react-native-bip39",
-  "version": "2.2.1",
-  "description": "ReactNative-ready Bitcoin BIP39: Mnemonic code for generating deterministic keys",
+  "name": "react-native-quick-bip39",
+  "version": "0.0.1",
+  "description": "React-Native fast bip39 using react-native-quick-crypto",
   "main": "index.js",
   "scripts": {
     "standard": "standard"
   },
-  "author": "Alberto Dallaporta",
+  "author": "Baraka Andrew",
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/39otrebla/react-native-bip39"
+    "url": "https://github.com/dreson4/react-native-quick-bip39"
   },
   "license": "MIT",
   "dependencies": {
