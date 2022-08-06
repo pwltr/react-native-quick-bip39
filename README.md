@@ -30,25 +30,25 @@ Or see [react-native-quick-crypto](https://github.com/margelo/react-native-quick
 
 ## Examples
 ``` js
-import bip39, {Wordlists} from '@dreson4/react-native-quick-bip39'
+import {generateMnemonic,mnemonicToSeedHex,validateMnemonic,entropyToMnemonic,mnemonicToEntropy,Wordlists} from '@dreson4/react-native-quick-bip39'
 
 // Generate a random mnemonic defaults to 128-bits of entropy 
-bip39.generateMnemonic(256)
+generateMnemonic(256)
 // => reveal man culture nominee tag abuse keen behave refuse warfare crisp thunder valve knock unique try fold energy torch news thought access hawk table
 
 //For other languages included see Worldlists
-bip39.generateMnemonic(256, Worldlists.ko) //returns korean mnemonic
+generateMnemonic(256, Worldlists.ko) //returns korean mnemonic
 
-bip39.mnemonicToSeedHex('basket actual')
+mnemonicToSeedHex('basket actual')
 // => '5cf2d4a8b0355e90295bdfc565a022a409af063d5365bb57bf74d9528f494bfa4400f53d8349b80fdae44082d7f9541e1dba2b003bcfec9d0d53781ca676651f'
 
-bip39.mnemonicToSeed('basket actual')
+mnemonicToSeed('basket actual')
 // => <Buffer 5c f2 d4 a8 b0 35 5e 90 29 5b df c5 65 a0 22 a4 09 af 06 3d 53 65 bb 57 bf 74 d9 52 8f 49 4b fa 44 00 f5 3d 83 49 b8 0f da e4 40 82 d7 f9 54 1e 1d ba 2b ...>
 
-bip39.validateMnemonic(myMnemonic)
+validateMnemonic(myMnemonic)
 // => true
 
-bip39.validateMnemonic('basket actual')
+validateMnemonic('basket actual')
 // => false
 ```
 
@@ -58,11 +58,11 @@ import bip39 from 'react-native-bip39'
 
 // defaults to BIP39 English word list
 // uses HEX strings for entropy
-const mnemonic = bip39.entropyToMnemonic('133755ff')
+const mnemonic = entropyToMnemonic('133755ff')
 // => basket rival lemon
 
 // reversible
-bip39.mnemonicToEntropy(mnemonic)
+mnemonicToEntropy(mnemonic)
 // => '133755ff'
 ```
 
