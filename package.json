@@ -1,5 +1,5 @@
 {
-  "name": "react-native-quick-bip39",
+  "name": "@dreson4/react-native-quick-bip39",
   "version": "0.0.1",
   "description": "React-Native fast bip39 using react-native-quick-crypto",
   "main": "index.js",
@@ -10,7 +10,7 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dreson4/react-native-quick-bip39"
+    "url": "git+https://github.com/dreson4/react-native-quick-bip39.git"
   },
   "license": "MIT",
   "dependencies": {
@@ -24,5 +24,17 @@
     "proxyquire": "^1.7.10",
     "standard": "*",
     "tape": "^4.6.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/dreson4/react-native-quick-bip39/issues"
+  },
+  "homepage": "https://github.com/dreson4/react-native-quick-bip39#readme",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "react-native",
+    "bip39",
+    "react-native-quick-crypto"
+  ]
 }
