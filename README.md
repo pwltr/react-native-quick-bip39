@@ -16,6 +16,23 @@ When a checksum is invalid, warn the user that the phrase is not something gener
 
 However, there should be other checks in place, such as checking to make sure the user is inputting 12 words or more separated by a space. ie. `phrase.trim().split(/\s+/g).length >= 12`
 
+## Installation
+
+```
+yarn add @dreson4/react-native-quick-bip39
+yarn add unorm
+```
+
+If you don't yet have react-native-quick-crypto and react-native-quick-base64 installed then run
+```
+yarn add react-native-quick-crypto
+yarn add react-native-quick-base64
+cd ios && pod install
+```
+Or see [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) for further installation instructions if needed.
+
+
+
 
 ## Examples
 ``` js
