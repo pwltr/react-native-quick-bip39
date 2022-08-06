@@ -1,14 +1,11 @@
-# ReactNative BIP39 (react-native-bip39)
+# ⚡️ react-native-quick-bip39
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+A react-native ready very fast implementation of bip39 using [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) and [react-native-quick-base64](https://github.com/craftzdog/react-native-quick-base64)
+
+All methods are sync, as react-native-quick-crypto uses JSI under the hood. 
 
 
-ReactNative-ready fork of the [original Javascript implementation of Bitcoin BIP39](https://github.com/bitcoinjs/bip39): Mnemonic code for generating deterministic keys.
-
-## Features
-- Quick all methods sync using [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) and [react-native-quick-base64](https://github.com/craftzdog/react-native-quick-base64)
-
-## Reminder for developers
+### Reminder for developers
 
 ***Please remember to allow recovery from mnemonic phrases that have invalid checksums (or that you don't have the wordlist)***
 
@@ -20,7 +17,6 @@ However, there should be other checks in place, such as checking to make sure th
 
 ```
 yarn add @dreson4/react-native-quick-bip39
-yarn add unorm
 ```
 
 If you don't yet have react-native-quick-crypto and react-native-quick-base64 installed then run
@@ -32,22 +28,16 @@ cd ios && pod install
 Or see [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) for further installation instructions if needed.
 
 
-
-
 ## Examples
 ``` js
-
 import bip39, {Wordlists} from '@dreson4/react-native-quick-bip39'
 
-// Generate a random mnemonic (uses randomBytes from react-native-quick-crypto under the hood), defaults to 128-bits of entropy
-
+// Generate a random mnemonic defaults to 128-bits of entropy 
 bip39.generateMnemonic(256)
 // => reveal man culture nominee tag abuse keen behave refuse warfare crisp thunder valve knock unique try fold energy torch news thought access hawk table
 
 //For other languages included see Worldlists
 bip39.generateMnemonic(256, Worldlists.ko) //returns korean mnemonic
-
-
 
 bip39.mnemonicToSeedHex('basket actual')
 // => '5cf2d4a8b0355e90295bdfc565a022a409af063d5365bb57bf74d9528f494bfa4400f53d8349b80fdae44082d7f9541e1dba2b003bcfec9d0d53781ca676651f'
@@ -79,4 +69,4 @@ bip39.mnemonicToEntropy(mnemonic)
 
 ## Credits
 - [react-native-bip39](https://github.com/novalabio/react-native-bip39)
-- [original Javascript implementation of Bitcoin BIP39](https://github.com/bitcoinjs/bip39)
+- [Original Javascript implementation of Bitcoin BIP39](https://github.com/bitcoinjs/bip39)
