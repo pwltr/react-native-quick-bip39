@@ -1,6 +1,6 @@
 {
   "name": "@dreson4/react-native-quick-bip39",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React-Native fast bip39 using react-native-quick-crypto",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@craftzdog/react-native-buffer": "^6.0.5",
-    "react-native-quick-crypto": "^0.4.5",
+    "react-native-quick-crypto": "^0.5.0",
     "unorm": "^1.6.0"
   },
   "devDependencies": {
