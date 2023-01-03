@@ -26,13 +26,19 @@ export const Wordlists = {
   zh: ZH_WORDLIST,
 };
 
-export function mnemonicToSeed(mnemonic: string, password: string): Buffer {
+export function mnemonicToSeed(
+  mnemonic: string,
+  password: string = ""
+): Buffer {
   const mnemonicBuffer = new Buffer(mnemonic, "utf8");
   const saltBuffer = new Buffer(salt(password), "utf8");
   return pbkdf2Sync(mnemonicBuffer, saltBuffer, 2048, 64, "sha512");
 }
 
-export function mnemonicToSeedHex(mnemonic: string, password: string): string {
+export function mnemonicToSeedHex(
+  mnemonic: string,
+  password: string = ""
+): string {
   return mnemonicToSeed(mnemonic, password).toString("hex");
 }
 
