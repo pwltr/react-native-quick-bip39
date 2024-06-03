@@ -49,7 +49,7 @@ export function mnemonicToEntropy(
   const wordlist = wordslist || EN_WORDLIST;
 
   const words = mnemonic.split(" ");
-  if (words.length % 3 === 0) throw "Invalid mnemonic";
+  if (words.length % 3 !== 0) throw "Invalid mnemonic";
 
   const belongToList = words.every(function (word) {
     return wordlist.indexOf(word) > -1;
