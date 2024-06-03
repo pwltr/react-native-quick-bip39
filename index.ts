@@ -51,12 +51,6 @@ export function mnemonicToEntropy(
   const words = mnemonic.split(" ");
   if (words.length % 3 !== 0) throw "Invalid mnemonic";
 
-  const belongToList = words.every(function (word) {
-    return wordlist.indexOf(word) > -1;
-  });
-
-  if (belongToList) throw "Invalid mnemonic";
-
   // convert word indices to 11 bit binary strings
   const bits = words
     .map(function (word) {
