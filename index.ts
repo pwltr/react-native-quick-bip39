@@ -30,8 +30,8 @@ export function mnemonicToSeed(
   mnemonic: string,
   password: string = ""
 ): Buffer {
-  const mnemonicBuffer = new Buffer(mnemonic, "utf8");
-  const saltBuffer = new Buffer(salt(password), "utf8");
+  const mnemonicBuffer = Buffer.from(mnemonic, "utf8");
+  const saltBuffer = Buffer.from(salt(password), "utf8");
   return pbkdf2Sync(mnemonicBuffer, saltBuffer, 2048, 64, "sha512");
 }
 
@@ -71,7 +71,7 @@ export function mnemonicToEntropy(
 
   if (!entropyBytes) throw "no entropyBytes";
 
-  const entropyBuffer = new Buffer(entropyBytes);
+  const entropyBuffer = Buffer.from(entropyBytes);
   const newChecksum = checksumBits(entropyBuffer);
 
   if (newChecksum !== checksum) throw "Invalid mnemonic checksum";
@@ -85,7 +85,7 @@ export function entropyToMnemonic(
 ): string {
   const wordlist = wordslist || EN_WORDLIST;
 
-  const entropyBuffer = new Buffer(entropy, "hex");
+  const entropyBuffer = Buffer.from(entropy, "hex");
   const entropyBits = bytesToBinary([].slice.call(entropyBuffer));
   const checksum = checksumBits(entropyBuffer);
 
