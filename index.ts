@@ -98,13 +98,13 @@ export function entropyToMnemonic(
 
 export function generateMnemonic(
   strength: number = 128,
-  wordlist?: any
+  wordlist?: string[]
 ): string {
   const randomBytesBuffer = Buffer.from(randomBytes(strength / 8));
   return entropyToMnemonic(randomBytesBuffer.toString("hex"), wordlist);
 }
 
-export function validateMnemonic(mnemonic: string, wordlist?: any) {
+export function validateMnemonic(mnemonic: string, wordlist?: string[]): boolean {
   try {
     mnemonicToEntropy(mnemonic, wordlist);
   } catch (e) {
@@ -113,7 +113,7 @@ export function validateMnemonic(mnemonic: string, wordlist?: any) {
   return true;
 }
 
-function checksumBits(entropyBuffer: Buffer) {
+function checksumBits(entropyBuffer: Buffer): string {
   const hash = createHash("sha256").update(entropyBuffer).digest();
 
   // Calculated constants from BIP39
@@ -123,13 +123,13 @@ function checksumBits(entropyBuffer: Buffer) {
   return bytesToBinary([].slice.call(hash)).slice(0, CS);
 }
 
-function salt(password: string) {
+function salt(password: string): string {
   //Using unorm to get proper unicode string, string.normalize might not work well for some verions of browser
   return "mnemonic" + (unorm.nfkd(password) || "");
 }
 
 //=========== helper methods from bitcoinjs-lib ========
-function bytesToBinary(bytes: number[]) {
+function bytesToBinary(bytes: number[]): string {
   return bytes
     .map((x) => lpad(x.toString(2), "0", 8))
     .join("");
