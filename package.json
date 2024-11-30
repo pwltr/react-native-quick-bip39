@@ -1,16 +1,18 @@
 {
-  "name": "@dreson4/react-native-quick-bip39",
-  "version": "0.0.6",
+  "name": "react-native-quick-bip39",
+  "version": "0.0.7",
   "description": "React-Native fast bip39 using react-native-quick-crypto",
-  "main": "index.js",
+  "main": "dist/index.mjs",
   "scripts": {
-    "standard": "standard"
+    "standard": "standard",
+    "tsc:check": "tsc -p tsconfig.json --noEmit",
+    "build": "tsup"
   },
-  "author": "Baraka Andrew",
+  "author": "Philipp Walter",
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dreson4/react-native-quick-bip39.git"
+    "url": "git+https://github.com/pwltr/react-native-quick-bip39.git"
   },
   "license": "MIT",
   "dependencies": {
@@ -19,19 +21,21 @@
     "unorm": "^1.6.0"
   },
   "devDependencies": {
+    "@react-native/typescript-config": "^0.76.3",
+    "@types/jest": "^29.5.14",
+    "@types/react-native": "^0.73.0",
     "@types/unorm": "^1.3.28",
     "nyc": "^8.3.0",
     "proxyquire": "^1.7.10",
     "standard": "*",
-    "tape": "^4.6.2"
+    "tape": "^4.6.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
   },
   "bugs": {
-    "url": "https://github.com/dreson4/react-native-quick-bip39/issues"
+    "url": "https://github.com/pwltr/react-native-quick-bip39/issues"
   },
-  "homepage": "https://github.com/dreson4/react-native-quick-bip39#readme",
-  "directories": {
-    "test": "test"
-  },
+  "homepage": "https://github.com/pwltr/react-native-quick-bip39#readme",
   "keywords": [
     "react-native",
     "bip39",
