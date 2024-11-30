@@ -32,7 +32,9 @@ export function mnemonicToSeed(
 ): Buffer {
   const mnemonicBuffer = Buffer.from(mnemonic, "utf8");
   const saltBuffer = Buffer.from(salt(password), "utf8");
-  return pbkdf2Sync(mnemonicBuffer, saltBuffer, 2048, 64, "sha512");
+  const seedArrayBuffer = pbkdf2Sync(mnemonicBuffer, saltBuffer, 2048, 64, "sha512");
+  const seedBuffer = Buffer.from(seedArrayBuffer);
+  return seedBuffer;
 }
 
 export function mnemonicToSeedHex(
