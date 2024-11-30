@@ -49,7 +49,7 @@ export function mnemonicToEntropy(
   const wordlist = wordslist || EN_WORDLIST;
 
   const words = mnemonic.split(" ");
-  if (words.length % 3 !== 0) throw "Invalid mnemonic";
+  if (words.length % 3 !== 0) throw new Error("Invalid mnemonic");
 
   // convert word indices to 11 bit binary strings
   const bits = words
@@ -69,12 +69,12 @@ export function mnemonicToEntropy(
     return parseInt(bin, 2);
   });
 
-  if (!entropyBytes) throw "no entropyBytes";
+  if (!entropyBytes) throw new Error("no entropyBytes");
 
   const entropyBuffer = Buffer.from(entropyBytes);
   const newChecksum = checksumBits(entropyBuffer);
 
-  if (newChecksum !== checksum) throw "Invalid mnemonic checksum";
+  if (newChecksum !== checksum) throw new Error("Invalid mnemonic checksum");
 
   return entropyBuffer.toString("hex");
 }
@@ -92,7 +92,7 @@ export function entropyToMnemonic(
   const bits = entropyBits + checksum;
   const chunks = bits.match(/(.{1,11})/g);
 
-  if (!chunks) throw "no chunks";
+  if (!chunks) throw new Error("no chunks");
 
   const words = chunks.map((binary: any) => {
     const index = parseInt(binary, 2);
