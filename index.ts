@@ -44,10 +44,8 @@ export function mnemonicToSeedHex(
 
 export function mnemonicToEntropy(
   mnemonic: string,
-  wordslist?: string[]
+  wordlist: string[] = EN_WORDLIST
 ): string {
-  const wordlist = wordslist || EN_WORDLIST;
-
   const words = mnemonic.split(" ");
   if (words.length % 3 !== 0) throw new Error("Invalid mnemonic");
 
@@ -79,10 +77,8 @@ export function mnemonicToEntropy(
 
 export function entropyToMnemonic(
   entropy: string,
-  wordslist?: string[]
+  wordlist: string[] = EN_WORDLIST
 ): string {
-  const wordlist = wordslist || EN_WORDLIST;
-
   const entropyBuffer = Buffer.from(entropy, "hex");
   const entropyBits = bytesToBinary([].slice.call(entropyBuffer));
   const checksum = checksumBits(entropyBuffer);
