@@ -8,7 +8,7 @@ import ES_WORDLIST from "./wordlists/es.json";
 import FR_WORDLIST from "./wordlists/fr.json";
 import IT_WORDLIST from "./wordlists/it.json";
 import JA_WORDLIST from "./wordlists/ja.json";
-import KO_WORLDLIST from "./wordlists/ko.json";
+import KO_WORDLIST from "./wordlists/ko.json";
 import PT_WORDLIST from "./wordlists/pt.json";
 import ZH_WORDLIST from "./wordlists/zh.json";
 
@@ -21,7 +21,7 @@ export const Wordlists = {
   fr: FR_WORDLIST,
   ja: JA_WORDLIST,
   it: IT_WORDLIST,
-  ko: KO_WORLDLIST,
+  ko: KO_WORDLIST,
   pt: PT_WORDLIST,
   zh: ZH_WORDLIST,
 };
