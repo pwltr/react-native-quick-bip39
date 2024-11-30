@@ -53,7 +53,7 @@ export function mnemonicToEntropy(
 
   // convert word indices to 11 bit binary strings
   const bits = words
-    .map(function (word) {
+    .map((word) => {
       const index = wordlist.indexOf(word);
       return lpad(index.toString(2), "0", 11);
     })
@@ -65,9 +65,7 @@ export function mnemonicToEntropy(
   const checksum = bits.slice(dividerIndex);
 
   // calculate the checksum and compare
-  const entropyBytes = entropy.match(/(.{1,8})/g)?.map(function (bin) {
-    return parseInt(bin, 2);
-  });
+  const entropyBytes = entropy.match(/(.{1,8})/g)?.map((bin) => parseInt(bin, 2));
 
   if (!entropyBytes) throw new Error("no entropyBytes");
 
@@ -94,7 +92,7 @@ export function entropyToMnemonic(
 
   if (!chunks) throw new Error("no chunks");
 
-  const words = chunks.map((binary: any) => {
+  const words = chunks.map((binary) => {
     const index = parseInt(binary, 2);
     return wordlist[index];
   });
@@ -137,9 +135,7 @@ function salt(password: string) {
 //=========== helper methods from bitcoinjs-lib ========
 function bytesToBinary(bytes: number[]) {
   return bytes
-    .map(function (x) {
-      return lpad(x.toString(2), "0", 8);
-    })
+    .map((x) => lpad(x.toString(2), "0", 8))
     .join("");
 }
 
