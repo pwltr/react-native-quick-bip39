@@ -1,34 +1,14 @@
 import unorm from "unorm";
 import crypto from "react-native-quick-crypto";
 import { Buffer } from "@craftzdog/react-native-buffer";
-
-import CS_WORDLIST from "./wordlists/cs.json";
-import EN_WORDLIST from "./wordlists/en.json";
-import ES_WORDLIST from "./wordlists/es.json";
-import FR_WORDLIST from "./wordlists/fr.json";
-import IT_WORDLIST from "./wordlists/it.json";
-import JA_WORDLIST from "./wordlists/ja.json";
-import KO_WORDLIST from "./wordlists/ko.json";
-import PT_WORDLIST from "./wordlists/pt.json";
-import ZH_WORDLIST from "./wordlists/zh.json";
+import wordlists from "./wordlists/index";
 
 const { pbkdf2Sync, createHash, randomBytes } = crypto;
 
+let DEFAULT_WORDLIST = wordlists.english;
 const DEFAULT_STRENGTH = 128;
 
-export const Wordlists = {
-  cs: CS_WORDLIST,
-  en: EN_WORDLIST,
-  es: ES_WORDLIST,
-  fr: FR_WORDLIST,
-  ja: JA_WORDLIST,
-  it: IT_WORDLIST,
-  ko: KO_WORDLIST,
-  pt: PT_WORDLIST,
-  zh: ZH_WORDLIST,
-};
-
-export function mnemonicToSeed(
+function mnemonicToSeed(
   mnemonic: string,
   password: string = ""
 ): Buffer {
@@ -39,21 +19,24 @@ export function mnemonicToSeed(
   return seedBuffer;
 }
 
-export function mnemonicToSeedHex(
+// Enable drop-in functionality with https://github.com/bitcoinjs/bip39
+const mnemonicToSeedSync = mnemonicToSeed;
+
+function mnemonicToSeedHex(
   mnemonic: string,
   password: string = ""
 ): string {
   return mnemonicToSeed(mnemonic, password).toString("hex");
 }
 
-export function mnemonicToEntropy(
+function mnemonicToEntropy(
   mnemonic: string,
-  wordlist: string[] = EN_WORDLIST
+  wordlist: string[] = DEFAULT_WORDLIST
 ): string {
   const words = mnemonic.split(" ");
   if (words.length % 3 !== 0) throw new Error("Invalid mnemonic");
 
-  // convert word indices to 11 bit binary strings
+  // Convert word indices to 11 bit binary strings
   const bits = words
     .map((word) => {
       const index = wordlist.indexOf(word);
@@ -61,12 +44,12 @@ export function mnemonicToEntropy(
     })
     .join("");
 
-  // split the binary string into ENT/CS
+  // Split the binary string into ENT/CS
   const dividerIndex = Math.floor(bits.length / 33) * 32;
   const entropy = bits.slice(0, dividerIndex);
   const checksum = bits.slice(dividerIndex);
 
-  // calculate the checksum and compare
+  // Calculate the checksum and compare
   const entropyBytes = entropy.match(/(.{1,8})/g)?.map((bin) => parseInt(bin, 2));
 
   if (!entropyBytes) throw new Error("no entropyBytes");
@@ -79,9 +62,9 @@ export function mnemonicToEntropy(
   return entropyBuffer.toString("hex");
 }
 
-export function entropyToMnemonic(
+function entropyToMnemonic(
   entropy: string,
-  wordlist: string[] = EN_WORDLIST
+  wordlist: string[] = DEFAULT_WORDLIST
 ): string {
   const entropyBuffer = Buffer.from(entropy, "hex");
   const entropyBits = bytesToBinary([].slice.call(entropyBuffer));
@@ -100,7 +83,7 @@ export function entropyToMnemonic(
   return words.join(" ");
 }
 
-export function generateMnemonic(
+function generateMnemonic(
   strength: number = DEFAULT_STRENGTH,
   wordlist?: string[]
 ): string {
@@ -108,7 +91,7 @@ export function generateMnemonic(
   return entropyToMnemonic(randomBytesBuffer.toString("hex"), wordlist);
 }
 
-export function validateMnemonic(mnemonic: string, wordlist?: string[]): boolean {
+function validateMnemonic(mnemonic: string, wordlist?: string[]): boolean {
   try {
     mnemonicToEntropy(mnemonic, wordlist);
   } catch (e) {
@@ -128,7 +111,7 @@ function checksumBits(entropyBuffer: Buffer): string {
 }
 
 function salt(password: string): string {
-  //Using unorm to get proper unicode string, string.normalize might not work well for some verions of browser
+  // Using unorm to get proper unicode string, string.normalize might not work well for some verions of browser
   return "mnemonic" + (unorm.nfkd(password) || "");
 }
 
@@ -143,3 +126,40 @@ function lpad(str: string, padString: string, length: number): string {
   while (str.length < length) str = padString + str;
   return str;
 }
+
+function setDefaultWordlist(language: string): void {
+  const result = wordlists[language];
+  if (!result) {
+    throw new Error(`Could not find wordlist for language "${language}"`);
+  }
+  DEFAULT_WORDLIST = result;
+}
+
+function getDefaultWordlist(): string {
+  if (!DEFAULT_WORDLIST) {
+    throw new Error('No Default Wordlist set');
+  }
+
+  const isMatchingWordlist = (language: string): boolean => {
+    return wordlists[language].every((word, index) => word === DEFAULT_WORDLIST[index]);
+  };
+
+  const validLanguages = Object.keys(wordlists).filter(language => 
+    language !== 'JA' && language !== 'EN' && isMatchingWordlist(language)
+  );
+
+  return validLanguages[0] || '';
+}
+
+export {
+  mnemonicToSeed,
+  mnemonicToSeedSync,
+  mnemonicToSeedHex,
+  mnemonicToEntropy,
+  entropyToMnemonic,
+  generateMnemonic,
+  validateMnemonic,
+  setDefaultWordlist,
+  getDefaultWordlist,
+  wordlists,
+};
