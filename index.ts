@@ -14,6 +14,8 @@ import ZH_WORDLIST from "./wordlists/zh.json";
 
 const { pbkdf2Sync, createHash, randomBytes } = crypto;
 
+const DEFAULT_STRENGTH = 128;
+
 export const Wordlists = {
   cs: CS_WORDLIST,
   en: EN_WORDLIST,
@@ -99,7 +101,7 @@ export function entropyToMnemonic(
 }
 
 export function generateMnemonic(
-  strength: number = 128,
+  strength: number = DEFAULT_STRENGTH,
   wordlist?: string[]
 ): string {
   const randomBytesBuffer = Buffer.from(randomBytes(strength / 8));
