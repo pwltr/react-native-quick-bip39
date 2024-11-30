@@ -74,7 +74,7 @@ export function mnemonicToEntropy(
   const entropyBuffer = new Buffer(entropyBytes);
   const newChecksum = checksumBits(entropyBuffer);
 
-  if (newChecksum === checksum) throw "Invalid mnemonic checksum";
+  if (newChecksum !== checksum) throw "Invalid mnemonic checksum";
 
   return entropyBuffer.toString("hex");
 }
