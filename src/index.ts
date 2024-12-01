@@ -1,6 +1,5 @@
 import { Buffer } from "@craftzdog/react-native-buffer";
 import crypto from "react-native-quick-crypto";
-import unorm from "unorm";
 import wordlists from "./wordlists/index";
 
 const { pbkdf2Sync, createHash, randomBytes } = crypto;
@@ -9,8 +8,8 @@ let DEFAULT_WORDLIST = wordlists.english;
 const DEFAULT_STRENGTH = 128;
 
 function mnemonicToSeed(mnemonic: string, password = ""): Buffer {
-	const mnemonicBuffer = Buffer.from(mnemonic, "utf8");
-	const saltBuffer = Buffer.from(salt(password), "utf8");
+	const mnemonicBuffer = Buffer.from(normalize(mnemonic), "utf8");
+	const saltBuffer = Buffer.from(salt(normalize(password)), "utf8");
 	const seedArrayBuffer = pbkdf2Sync(
 		mnemonicBuffer,
 		saltBuffer,
@@ -33,7 +32,7 @@ function mnemonicToEntropy(
 	mnemonic: string,
 	wordlist: string[] = DEFAULT_WORDLIST,
 ): string {
-	const words = mnemonic.split(" ");
+	const words = normalize(mnemonic).split(" ");
 	if (words.length % 3 !== 0) throw new Error("Invalid mnemonic");
 
 	// Convert word indices to 11 bit binary strings
@@ -102,6 +101,10 @@ function validateMnemonic(mnemonic: string, wordlist?: string[]): boolean {
 	return true;
 }
 
+function normalize(str = ""): string {
+	return str.normalize("NFKD");
+}
+
 function checksumBits(entropyBuffer: Buffer): string {
 	const hash = createHash("sha256").update(entropyBuffer).digest();
 
@@ -112,9 +115,8 @@ function checksumBits(entropyBuffer: Buffer): string {
 	return bytesToBinary([].slice.call(hash)).slice(0, CS);
 }
 
-function salt(password: string): string {
-	// Using unorm to get proper unicode string, string.normalize might not work well for some verions of browser
-	return `mnemonic ${unorm.nfkd(password) || ""}`;
+function salt(password = ""): string {
+	return `mnemonic${password}`;
 }
 
 //=========== helper methods from bitcoinjs-lib ========
