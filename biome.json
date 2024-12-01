@@ -1,0 +1,13 @@
+{
+    "linter": {
+        "rules": {
+            "style": {
+                "noParameterAssign": "off",
+                "useBlockStatements": {
+                    "level": "warn",
+                    "fix": "unsafe"
+                }
+            }
+        }
+    }
+}
