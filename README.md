@@ -1,8 +1,8 @@
 # ⚡️ react-native-quick-bip39
 
-A react-native ready very fast implementation of bip39 using [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) and [react-native-quick-base64](https://github.com/craftzdog/react-native-quick-base64)
+A fast implementation of `bip39` using [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto)
 
-All methods are sync, as react-native-quick-crypto uses JSI under the hood.
+All methods are sync, as `react-native-quick-crypto` uses JSI under the hood.
 
 ### Reminder for developers
 
@@ -15,49 +15,34 @@ However, there should be other checks in place, such as checking to make sure th
 ## Installation
 
 ```
-yarn add @dreson4/react-native-quick-bip39
+yarn add react-native-quick-bip39
 ```
 
-If you don't yet have react-native-quick-crypto and react-native-quick-base64 installed then run
+## Drop-in replacement for `bip39`
 
-```
-yarn add react-native-quick-crypto
-yarn add react-native-quick-base64
-cd ios && pod install
-```
+This library exposes all the same methods from the [original JavaScript implementation](https://github.com/bitcoinjs/bip39). If your react-native project depends on that, you can modify your `metro.config.js` to replace all calls with a fully native implementation:
 
-Or see [react-native-quick-crypto](https://github.com/margelo/react-native-quick-crypto) for further installation instructions if needed.
+Use the [`resolveRequest`](https://facebook.github.io/metro/docs/resolution#resolverequest-customresolver) configuration option in your `metro.config.js`
 
-## Replace `crypto-browserify`
+```js
+config.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (moduleName === 'bip39') {
+    // when importing bip39, resolve to react-native-quick-bip39
+    return context.resolveRequest(
+      context,
+      'react-native-quick-bip39',
+      platform,
+    )
+  }
 
-If you are using a library that depends on `crypto`, instead of polyfilling it with `crypto-browserify` (or `react-native-crypto`) you can use `react-native-quick-crypto` for a fully native implementation. This way you can get much faster crypto operations with just a single-line change!
-
-In your `babel.config.js`, add a module resolver to replace `crypto` with `react-native-quick-crypto`:
-
-```diff
-module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
-  plugins: [
-+   [
-+     'module-resolver',
-+     {
-+       alias: {
-+         'crypto': 'react-native-quick-crypto',
-+         'stream': 'stream-browserify',
-+         'buffer': '@craftzdog/react-native-buffer',
-+       },
-+     },
-+   ],
-    ...
-  ],
-};
+  // otherwise chain to the standard Metro resolver.
+  return context.resolveRequest(context, moduleName, platform)
+}
 ```
 
 Then restart your bundler using `yarn start --reset-cache`.
 
-Now, all imports for `crypto` will be resolved as `react-native-quick-crypto` instead.
-
-> 💡 Since react-native-quick-crypto depends on `stream` and `buffer`, we can resolve those to `stream-browserify` and @craftzdog's `react-native-buffer` (which is faster than `buffer` because it uses JSI for base64 encoding and decoding).
+> 💡 Since `react-native-quick-crypto` depends on `stream` and `buffer`, we can optionally resolve those to `stream-browserify` and @craftzdog's `react-native-buffer`. See [documentation](https://github.com/margelo/react-native-quick-crypto).
 
 ## Examples
 
@@ -65,18 +50,19 @@ Now, all imports for `crypto` will be resolved as `react-native-quick-crypto` in
 import {
   generateMnemonic,
   mnemonicToSeedHex,
+  mnemonicToSeed,
   validateMnemonic,
   entropyToMnemonic,
   mnemonicToEntropy,
-  Wordlists,
-} from "@dreson4/react-native-quick-bip39";
+  wordlists,
+} from "react-native-quick-bip39";
 
 // Generate a random mnemonic defaults to 128-bits of entropy
 generateMnemonic(256);
 // => reveal man culture nominee tag abuse keen behave refuse warfare crisp thunder valve knock unique try fold energy torch news thought access hawk table
 
-//For other languages included see Worldlists
-generateMnemonic(256, Worldlists.ko); //returns korean mnemonic
+// For other languages included see Worldlists
+generateMnemonic(256, wordlists.korean); // returns korean mnemonic
 
 mnemonicToSeedHex("basket actual");
 // => '5cf2d4a8b0355e90295bdfc565a022a409af063d5365bb57bf74d9528f494bfa4400f53d8349b80fdae44082d7f9541e1dba2b003bcfec9d0d53781ca676651f'
@@ -93,5 +79,6 @@ validateMnemonic("basket actual");
 
 ## Credits
 
+- [@dreson4/react-native-quick-bip39](https://github.com/dreson4/react-native-quick-bip39)
 - [react-native-bip39](https://github.com/novalabio/react-native-bip39)
 - [Original Javascript implementation of Bitcoin BIP39](https://github.com/bitcoinjs/bip39)
