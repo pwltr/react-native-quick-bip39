@@ -1,6 +1,6 @@
 {
   "name": "react-native-quick-bip39",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "React-Native fast bip39 using react-native-quick-crypto",
   "main": "dist/index.js",
   "scripts": {
