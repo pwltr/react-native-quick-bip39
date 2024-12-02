@@ -2,7 +2,7 @@
   "name": "react-native-quick-bip39",
   "version": "0.0.8",
   "description": "React-Native fast bip39 using react-native-quick-crypto",
-  "main": "dist/index.mjs",
+  "main": "dist/index.js",
   "scripts": {
     "tsc:check": "tsc -p tsconfig.json --noEmit",
     "format": "biome format --write ./src",
